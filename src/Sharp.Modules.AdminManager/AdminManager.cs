@@ -226,17 +226,28 @@ public class AdminManager : IAdminManager, IModSharpModule
     /// </summary>
     private static bool IsWildcardMatch(string permission, string[] patternSegments)
     {
-        var permissionSegments = permission.Split(IAdminManager.SeparatorOperator);
+        var permissionSegments = permission.Split(':');
 
-        // Segment count must match
-        if (patternSegments.Length != permissionSegments.Length)
-        {
+        // Pattern cannot have MORE segments than permission (prefix matching)
+        // Example: Pattern "System:*:*:*" (4) cannot match "System:Role" (2)
+        if (patternSegments.Length > permissionSegments.Length)
             return false;
+
+        // Check each segment in the pattern
+        for (int i = 0; i < patternSegments.Length; i++)
+        {
+            // Wildcard matches any value at this position
+            if (patternSegments[i] == "*")
+                continue;
+
+            // Non-wildcard must match exactly (case-insensitive)
+            if (!string.Equals(patternSegments[i], permissionSegments[i], StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
         }
 
-        // Check each segment
-        return !patternSegments
-            .Where((t, i) => t != IAdminManager.WildCardOperator.ToString() && !string.Equals(t, permissionSegments[i], StringComparison.OrdinalIgnoreCase))
-            .Any();
+        // All pattern segments matched - this is a valid prefix match
+        return true;
     }
 }

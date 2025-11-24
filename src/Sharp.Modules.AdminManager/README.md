@@ -93,10 +93,10 @@ AdminManager 提供了一套完整的权限配置约定系统，支持以下特�
 - 权限名和角色名均不区分大小写
 - `system:*:*` 等同于 `System:*:*`
 
-##### 5. 段数匹配
-- `System:*:*` - 仅匹配三段权限
-- `System:*:*:*` - 仅匹配四段权限
-- 通配符严格按段数匹配
+##### 5. 段数匹配（前缀匹配）
+- `System:*` - 匹配所有 System 开头的权限（如 `System:Role:Create`、`System:User:View:Detail` 等）
+- `System:*:*` - 匹配所有三段及以上的 System 权限（如 `System:Role:Create`、`System:Role:Create:Advanced` 等）
+- 通配符按前缀匹配：模式段数 ≤ 权限段数
 
 ## 配置示例
 
