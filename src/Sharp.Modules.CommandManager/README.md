@@ -16,7 +16,7 @@ CommandManager 是一个提供集中式指令注册管理的插件。通过使�
 
 ### 3. 避免与 Extension 混用
 
-**重要提示：** 不推荐Extension和该插件混用，混用会导致意想不到的情况。请根据您的项目架构选择其中一种方案：
+**重要提示：** 不推荐Extension和该插件混用，混用会导致意想不到的情况。请根据你的项目架构选择其中一种方案：
 - 多插件架构：使用 Sharp.Modules.CommandManager
 - 单体架构：使用 Sharp.Extensions.CommandMangaer
 
