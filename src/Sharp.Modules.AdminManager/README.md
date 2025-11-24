@@ -4,6 +4,9 @@
 
 AdminManager 是一个权限管理插件，旨在将 `Sharp.Shared.Objects.IAdmin` 从内核中转移出来，实现权限管理的模块化和可扩展性。
 
+如需更多，你也可以参阅https://www.doubao.com/thread/wc0f1c5cae120c2bb
+> 如果你是非中文用户，请使用翻译器。
+
 ## 设计目标
 
 ### 1. 内核解耦

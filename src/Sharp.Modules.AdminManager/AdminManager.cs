@@ -9,13 +9,10 @@ using Sharp.Modules.CommandManager.Shared;
 
 namespace Sharp.Modules.AdminManager;
 
-// https://www.doubao.com/thread/wc0f1c5cae120c2bb
-
 public class AdminManager : IAdminManager, IModSharpModule
 {
     private ICommandManager _commandManager = null!;
 
-    private readonly string _moduleIdentity;
     private readonly ISharedSystem _shared;
     private readonly List<Admin> _admins = [];
     private readonly Dictionary<string, IAdminCommandRegistry> _registries = new(StringComparer.OrdinalIgnoreCase);
@@ -31,7 +28,6 @@ public class AdminManager : IAdminManager, IModSharpModule
         IConfiguration coreConfiguration,
         bool hotReload)
     {
-        _moduleIdentity = Path.GetFileName(dllPath);
         _shared = sharedSystem;
 
         var manifest = JsonSerializer.Deserialize<AdminTableManifest>(Path.Combine(sharpPath, "configs", "admin.jsonc"),
@@ -84,18 +80,13 @@ public class AdminManager : IAdminManager, IModSharpModule
         _shared.GetSharpModuleManager().RegisterSharpModuleInterface<IAdminManager>(this, IAdminManager.Identity, this);
     }
 
-    public void OnLibraryConnected(string name)
+    public void OnAllModulesLoaded()
     {
-        // If this is our own module connecting, initialize the command manager
-        if (name.Equals(_moduleIdentity, StringComparison.OrdinalIgnoreCase))
-        {
-            _commandManager = _shared
-                .GetSharpModuleManager()
-                .GetRequiredSharpModuleInterface<ICommandManager>(ICommandManager.Identity)
-                .Instance!;
-        }
-        // Nothing else to do - modules will re-register via their own OnLibraryConnected
+        _commandManager = _shared.GetSharpModuleManager()
+            .GetRequiredSharpModuleInterface<ICommandManager>(ICommandManager.Identity)
+            .Instance!;
     }
+
 
     public void OnLibraryDisconnect(string name)
     {
