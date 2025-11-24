@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Sharp.Modules.AdminManager.Shared/Sharp.Modules.AdminManager.Shared.csproj" />
+    <Project Path="src/Sharp.Modules.AdminManager/Sharp.Modules.AdminManager.csproj" />
+    <Project Path="src/Sharp.Modules.CommandManager.Shared/Sharp.Modules.CommandManager.Shared.csproj" />
+    <Project Path="src/Sharp.Modules.CommandManager/Sharp.Modules.CommandManager.csproj" />
+  </Folder>
+</Solution>
